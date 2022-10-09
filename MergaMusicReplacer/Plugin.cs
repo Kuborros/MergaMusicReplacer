@@ -75,7 +75,7 @@ class Patch
             {
                 int i = 1;
             }
-            selectedClip.name = Plugin.audioMerga1.Value + "_patched";
+            selectedClip.name = bgmMusic.name;
             bgmMusic = selectedClip;
         }
         if (bgmMusic.name == "M_Boss_Merga2")
@@ -87,7 +87,7 @@ class Patch
             {
                 int i = 1;
             }
-            selectedClip.name = Plugin.audioMerga2.Value;
+            selectedClip.name = bgmMusic.name;
             bgmMusic = selectedClip;
         }
         if (bgmMusic.name == "M_Boss_Merga3")
@@ -99,7 +99,7 @@ class Patch
             {
                 int i = 1;
             }
-            selectedClip.name = Plugin.audioMerga3.Value;
+            selectedClip.name = bgmMusic.name;
             bgmMusic = selectedClip;
         }
     }
