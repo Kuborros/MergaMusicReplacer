@@ -49,9 +49,9 @@ namespace MergaMusicReplacer
         {
             var harmony = new Harmony("com.kuborro.plugins.fp2.mergamusic");
 
-            audioMerga1 = Config.Bind("General", "Phase 1", "M_Boss_Merga1" , "Filename of the track for phase 1 (Blue Moon).");
-            audioMerga2 = Config.Bind("General", "Phase 2", "M_Boss_Merga1", "Filename of the track for phase 2 (Blood Moon).");
-            audioMerga3 = Config.Bind("General", "Phase 3", "M_Boss_Merga1", "Filename of the track for phase 3 (SuperMoon).");
+            audioMerga1 = Config.Bind("General", "Phase 1", "M_Boss_Merga1", "Filename of the track for phase 1 (Blue/Blood/Super Moon).");
+            audioMerga2 = Config.Bind("General", "Phase 2", "M_Boss_Merga2", "Filename of the track for phase 2 (Eclipse/Lilith).");
+            audioMerga3 = Config.Bind("General", "Phase 3", "M_Boss_Merga3", "Filename of the track for phase 3 (Final).");
             
             harmony.PatchAll(typeof(Patch));
 
@@ -88,7 +88,7 @@ class Patch
                 int i = 1;
             }
             selectedClip.name = bgmMusic.name;
-            bgmMusic = selectedClip;
+            bgmMusic = selectedClip; 
         }
         if (bgmMusic.name == "M_Boss_Merga3")
         {
