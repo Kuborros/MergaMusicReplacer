@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32922.545
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MergaMusicReplacer", "MergaMusicReplacer\MergaMusicReplacer.csproj", "{DE269043-CF72-4234-B996-00C2135BC93F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DE269043-CF72-4234-B996-00C2135BC93F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE269043-CF72-4234-B996-00C2135BC93F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE269043-CF72-4234-B996-00C2135BC93F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE269043-CF72-4234-B996-00C2135BC93F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F83697C1-C897-4F56-BCC2-B6BCE9E0380A}
+	EndGlobalSection
+EndGlobal
