@@ -2,16 +2,21 @@
 using BepInEx.Configuration;
 using HarmonyLib;
 using MergaMusicReplacer;
+using Mono.Cecil.Cil;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Reflection.Emit;
 using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using UnityEngine;
-using static System.Net.Mime.MediaTypeNames;
+using System.Reflection;
+using OpCodes = System.Reflection.Emit.OpCodes;
 
 namespace MergaMusicReplacer
 {
-    [BepInPlugin("com.kuborro.plugins.fp2.mergamusic", "MergaMusicReplacer", "1.1.0")]
+    [BepInPlugin("com.kuborro.plugins.fp2.mergamusic", "MergaMusicReplacer", "1.2.0")]
     public class Plugin : BaseUnityPlugin
     {
         public static ConfigEntry<string> audioMerga1;
@@ -67,6 +72,7 @@ namespace MergaMusicReplacer
             audioMerga3 = Config.Bind("General", "Phase 3", "M_Boss_Merga3.wav", "Filename of the track for phase 3 (Final).");
             
             harmony.PatchAll(typeof(Patch));
+            harmony.PatchAll(typeof(Patch2));
 
         }
     }
@@ -156,5 +162,35 @@ class Patch
                 bgmMusic = selectedClip;
             }
         }
+    }
+}
+
+class Patch2
+{
+    [HarmonyTranspiler]
+    [HarmonyPatch(typeof(MergaBlueMoon),"Activate",MethodType.Normal)]
+    [HarmonyPatch(typeof(MergaBloodMoon), "Activate", MethodType.Normal)]
+    [HarmonyPatch(typeof(MergaSupermoon), "Activate", MethodType.Normal)]
+    [HarmonyPatch(typeof(MergaLilith), "Activate", MethodType.Normal)]
+    static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
+    {
+        List<CodeInstruction> codes = new List<CodeInstruction>(instructions);
+        for (int i = 5; i < codes.Count; i++)
+        {
+            if (codes[i].opcode == OpCodes.Brfalse && codes[i-1].opcode == OpCodes.Call && codes[i-2].opcode == OpCodes.Ldfld && codes[i-3].opcode == OpCodes.Ldarg_0 && codes[i-4].opcode == OpCodes.Call)
+            {
+                FileLog.Log("Opcode found");
+                FileLog.Log("Noped:" + codes[i - 3].opcode.ToString());
+                codes[i-3].opcode = OpCodes.Nop; //Ldarg.0
+                FileLog.Log("Noped:" + codes[i - 2].opcode.ToString());
+                codes[i-2].opcode = OpCodes.Nop; //Ldfld
+                FileLog.Log("Noped:" + codes[i - 1].opcode.ToString());
+                codes[i-1].opcode = OpCodes.Nop; //Call
+                FileLog.Log("Modded:" + codes[i].opcode.ToString());
+                codes[i].opcode = OpCodes.Brtrue; //BrFalse
+                break;
+            };
+        }
+        return codes;
     }
 }
