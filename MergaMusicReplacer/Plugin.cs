@@ -11,7 +11,7 @@ using OpCodes = System.Reflection.Emit.OpCodes;
 
 namespace MergaMusicReplacer
 {
-    [BepInPlugin("com.kuborro.plugins.fp2.mergamusic", "MergaMusicReplacer", "1.2.0")]
+    [BepInPlugin("com.kuborro.plugins.fp2.mergamusic", "MergaMusicReplacer", "1.2.1")]
     public class Plugin : BaseUnityPlugin
     {
         public static ConfigEntry<string> audioMerga1;
@@ -175,14 +175,9 @@ class Patch2
         {
             if (codes[i].opcode == OpCodes.Brfalse && codes[i - 1].opcode == OpCodes.Call && codes[i - 2].opcode == OpCodes.Ldfld && codes[i - 3].opcode == OpCodes.Ldarg_0 && codes[i - 4].opcode == OpCodes.Call)
             {
-                FileLog.Log("Opcode found");
-                FileLog.Log("Noped:" + codes[i - 3].opcode.ToString());
                 codes[i - 3].opcode = OpCodes.Nop; //Ldarg.0
-                FileLog.Log("Noped:" + codes[i - 2].opcode.ToString());
                 codes[i - 2].opcode = OpCodes.Nop; //Ldfld
-                FileLog.Log("Noped:" + codes[i - 1].opcode.ToString());
                 codes[i - 1].opcode = OpCodes.Nop; //Call
-                FileLog.Log("Modded:" + codes[i].opcode.ToString());
                 codes[i].opcode = OpCodes.Brtrue; //BrFalse
                 break;
             };
