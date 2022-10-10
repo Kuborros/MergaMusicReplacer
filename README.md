@@ -1,4 +1,4 @@
-# Merga Music Replacer 1.0
+# Merga Music Replacer 1.1
 
 A mod for the game [Freedom Planet 2](https://freedomplanet2.com/) which allows you to replace the music with custom tracks during each phase of the final boss fight.  
 
