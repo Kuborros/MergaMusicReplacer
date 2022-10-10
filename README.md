@@ -8,10 +8,19 @@ If asked, agree to merge the BepInEx folders.
 
 ## Usage:
 Run the game once after installing so the configuration file gets created.  
-put three music tracks in .wav format in the `mod_overrides` folder and open the configuration file in *./BepinEx/config/com.kuborro.plugins.fp2.mergamusic.cfg* with your preferred text editor.  
-replace the track names in the configuration file with the names of your tracks in `mod_overrides`, without the .wav extension.  
-![image](https://user-images.githubusercontent.com/33236735/194773800-5c441138-63cd-4c0c-8b15-31f1834e5963.png)
+put three music tracks that are in a supported format in to the `mod_overrides` folder and open the configuration file in *./BepinEx/config/com.kuborro.plugins.fp2.mergamusic.cfg* with your preferred text editor.  
+replace the track names in the configuration file with the names of your tracks in `mod_overrides` **including the file extension**!  
+![example_of_mods](https://user-images.githubusercontent.com/33236735/194930971-f8581181-3e5d-45e5-ad35-e0d1b8f8837d.png)
 
+## Supported formats:
+MPEG layer 3 (.mp3)  
+Ogg Vorbis (.ogg)  
+Microsoft Wave (.wav)  
+Audio Interchange File Format (.aiff / .aif)  
+Ultimate Soundtracker module (.mod)  
+Impulse Tracker module (.it)  
+Scream Tracker module (.s3m)  
+FastTracker 2 module (.xm)  
 
 ## Prerequisites:
 The mod requires [BepinEx 5](https://github.com/BepInEx/BepInEx) to function. You can download it here:
