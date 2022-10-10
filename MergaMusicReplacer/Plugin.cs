@@ -2,7 +2,6 @@
 using BepInEx.Configuration;
 using HarmonyLib;
 using MergaMusicReplacer;
-using Mono.Cecil.Cil;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -23,7 +22,7 @@ namespace MergaMusicReplacer
 
         public static string FilePathToFileUrl(string filePath)
         {
-            StringBuilder uri = new StringBuilder();
+            StringBuilder uri = new();
             foreach (char v in filePath)
             {
                 if ((v >= 'a' && v <= 'z') || (v >= 'A' && v <= 'Z') || (v >= '0' && v <= '9') ||
@@ -47,7 +46,7 @@ namespace MergaMusicReplacer
                 uri.Insert(0, "file:///");
             return uri.ToString();
         }
-        public static AudioType getAudioType(string extension)
+        public static AudioType GetAudioType(string extension)
         {
             if (extension == ".mp3") return AudioType.MPEG;
             if (extension == ".wav") return AudioType.WAV;
@@ -66,7 +65,7 @@ namespace MergaMusicReplacer
             audioMerga1 = Config.Bind("General", "Phase 1", "M_Boss_Merga1.wav", "Filename of the track for phase 1 (Blue/Blood/Super Moon).");
             audioMerga2 = Config.Bind("General", "Phase 2", "M_Boss_Merga2.wav", "Filename of the track for phase 2 (Eclipse/Lilith).");
             audioMerga3 = Config.Bind("General", "Phase 3", "M_Boss_Merga3.wav", "Filename of the track for phase 3 (Final).");
-            
+
             harmony.PatchAll(typeof(Patch));
             harmony.PatchAll(typeof(Patch2));
 
@@ -89,15 +88,16 @@ class Patch
             if (ext == "")
             {
                 ext = ".wav";
-                trackPath = trackPath + ext;
+                trackPath += ext;
             }
             if (ext is ".mod" or ".s3m" or ".it" or ".xm")
             {
                 stream = false;
             }
-            if (File.Exists(trackPath) && Plugin.getAudioType(ext) != AudioType.UNKNOWN) { 
+            if (File.Exists(trackPath) && Plugin.GetAudioType(ext) != AudioType.UNKNOWN)
+            {
                 WWW audioLoader = new(Plugin.FilePathToFileUrl(trackPath));
-                AudioClip selectedClip = audioLoader.GetAudioClip(false, stream, Plugin.getAudioType(ext));
+                AudioClip selectedClip = audioLoader.GetAudioClip(false, stream, Plugin.GetAudioType(ext));
                 while (!(selectedClip.loadState == AudioDataLoadState.Loaded))
                 {
                     int i = 1; //we gotta wait for the file to load this is why this is here lol.
@@ -114,16 +114,16 @@ class Patch
             if (ext == "")
             {
                 ext = ".wav";
-                trackPath = trackPath + ext;
+                trackPath += ext;
             }
             if (ext is ".mod" or ".s3m" or ".it" or ".xm")
             {
                 stream = false;
             }
-            if (File.Exists(trackPath) && Plugin.getAudioType(ext) != AudioType.UNKNOWN)
+            if (File.Exists(trackPath) && Plugin.GetAudioType(ext) != AudioType.UNKNOWN)
             {
                 WWW audioLoader = new(Plugin.FilePathToFileUrl(trackPath));
-                AudioClip selectedClip = audioLoader.GetAudioClip(false, stream, Plugin.getAudioType(ext));
+                AudioClip selectedClip = audioLoader.GetAudioClip(false, stream, Plugin.GetAudioType(ext));
                 while (!(selectedClip.loadState == AudioDataLoadState.Loaded))
                 {
                     int i = 1;
@@ -140,16 +140,16 @@ class Patch
             if (ext == "")
             {
                 ext = ".wav";
-                trackPath = trackPath + ext;
+                trackPath += ext;
             }
             if (ext is ".mod" or ".s3m" or ".it" or ".xm")
             {
                 stream = false;
             }
-            if (File.Exists(trackPath) && Plugin.getAudioType(ext) != AudioType.UNKNOWN)
+            if (File.Exists(trackPath) && Plugin.GetAudioType(ext) != AudioType.UNKNOWN)
             {
                 WWW audioLoader = new(Plugin.FilePathToFileUrl(trackPath));
-                AudioClip selectedClip = audioLoader.GetAudioClip(false, stream, Plugin.getAudioType(ext));
+                AudioClip selectedClip = audioLoader.GetAudioClip(false, stream, Plugin.GetAudioType(ext));
                 while (!(selectedClip.loadState == AudioDataLoadState.Loaded))
                 {
                     int i = 1;
@@ -164,24 +164,24 @@ class Patch
 class Patch2
 {
     [HarmonyTranspiler]
-    [HarmonyPatch(typeof(MergaBlueMoon),"Activate",MethodType.Normal)]
+    [HarmonyPatch(typeof(MergaBlueMoon), "Activate", MethodType.Normal)]
     [HarmonyPatch(typeof(MergaBloodMoon), "Activate", MethodType.Normal)]
     [HarmonyPatch(typeof(MergaSupermoon), "Activate", MethodType.Normal)]
     [HarmonyPatch(typeof(MergaLilith), "Activate", MethodType.Normal)]
     static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
     {
-        List<CodeInstruction> codes = new List<CodeInstruction>(instructions);
+        List<CodeInstruction> codes = new(instructions);
         for (int i = 5; i < codes.Count; i++)
         {
-            if (codes[i].opcode == OpCodes.Brfalse && codes[i-1].opcode == OpCodes.Call && codes[i-2].opcode == OpCodes.Ldfld && codes[i-3].opcode == OpCodes.Ldarg_0 && codes[i-4].opcode == OpCodes.Call)
+            if (codes[i].opcode == OpCodes.Brfalse && codes[i - 1].opcode == OpCodes.Call && codes[i - 2].opcode == OpCodes.Ldfld && codes[i - 3].opcode == OpCodes.Ldarg_0 && codes[i - 4].opcode == OpCodes.Call)
             {
                 FileLog.Log("Opcode found");
                 FileLog.Log("Noped:" + codes[i - 3].opcode.ToString());
-                codes[i-3].opcode = OpCodes.Nop; //Ldarg.0
+                codes[i - 3].opcode = OpCodes.Nop; //Ldarg.0
                 FileLog.Log("Noped:" + codes[i - 2].opcode.ToString());
-                codes[i-2].opcode = OpCodes.Nop; //Ldfld
+                codes[i - 2].opcode = OpCodes.Nop; //Ldfld
                 FileLog.Log("Noped:" + codes[i - 1].opcode.ToString());
-                codes[i-1].opcode = OpCodes.Nop; //Call
+                codes[i - 1].opcode = OpCodes.Nop; //Call
                 FileLog.Log("Modded:" + codes[i].opcode.ToString());
                 codes[i].opcode = OpCodes.Brtrue; //BrFalse
                 break;
