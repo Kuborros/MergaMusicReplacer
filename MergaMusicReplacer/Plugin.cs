@@ -48,6 +48,7 @@ namespace MergaMusicReplacer
         }
         public static AudioType GetAudioType(string extension)
         {
+            if (extension == ".mp3") return AudioType.MPEG;
             if (extension == ".wav") return AudioType.WAV;
             if (extension == ".ogg") return AudioType.OGGVORBIS;
             if (extension == ".s3m") return AudioType.S3M;
@@ -89,7 +90,7 @@ class Patch
                 ext = ".wav";
                 trackPath += ext;
             }
-            if (ext is ".mod" or ".s3m" or ".it" or ".xm")
+            if (ext is ".mod" or ".s3m" or ".it" or ".xm" or ".mp3")
             {
                 stream = false;
             }
@@ -115,7 +116,7 @@ class Patch
                 ext = ".wav";
                 trackPath += ext;
             }
-            if (ext is ".mod" or ".s3m" or ".it" or ".xm")
+            if (ext is ".mod" or ".s3m" or ".it" or ".xm" or ".mp3")
             {
                 stream = false;
             }
@@ -141,7 +142,7 @@ class Patch
                 ext = ".wav";
                 trackPath += ext;
             }
-            if (ext is ".mod" or ".s3m" or ".it" or ".xm")
+            if (ext is ".mod" or ".s3m" or ".it" or ".xm" or ".mp3")
             {
                 stream = false;
             }
