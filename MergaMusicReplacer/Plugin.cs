@@ -48,7 +48,6 @@ namespace MergaMusicReplacer
         }
         public static AudioType GetAudioType(string extension)
         {
-            if (extension == ".mp3") return AudioType.MPEG;
             if (extension == ".wav") return AudioType.WAV;
             if (extension == ".ogg") return AudioType.OGGVORBIS;
             if (extension == ".s3m") return AudioType.S3M;
