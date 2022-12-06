@@ -11,7 +11,10 @@ using OpCodes = System.Reflection.Emit.OpCodes;
 
 namespace MergaMusicReplacer
 {
-    [BepInPlugin("com.kuborro.plugins.fp2.mergamusic", "MergaMusicReplacer", "1.2.3")]
+    [BepInPlugin("com.kuborro.plugins.fp2.mergamusic", "MergaMusicReplacer", "1.2.4")]
+    [BepInProcess("FP2.exe")]
+    [BepInIncompatibility("com.kuborro.plugins.fp2.musicreplacer")]
+
     public class Plugin : BaseUnityPlugin
     {
         public static ConfigEntry<string> audioMerga1;
